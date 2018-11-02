@@ -2,6 +2,7 @@
 require_once ('cmf_db.php');
 require_once ('cmf_config.php');
 require_once("guan_jian_zi.php");
+use Beanbun\Lib\Db;
 $method = "GET";
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);

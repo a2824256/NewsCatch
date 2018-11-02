@@ -1,9 +1,8 @@
 <?php
-
-
 require_once ('cmf_db.php');
 require_once(__DIR__ . '/cmf_tyc.php');
 require_once(__DIR__ . '/guan_jian_zi.php');
+use Beanbun\Lib\Db;
 function removeBold($content)
 {
     $content = strtolower($content);

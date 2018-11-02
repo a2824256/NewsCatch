@@ -1,9 +1,9 @@
 <?php
-
-
 require_once ('cmf_db.php');
 require_once(__DIR__ . '/cmf_tyc.php');
 require_once(__DIR__ . '/guan_jian_zi.php');
+use Beanbun\Lib\Db;
+
 function removeBold($content)
 {
     $content = strtolower($content);
@@ -27,29 +27,29 @@ function get_category($host)
     }
 }
 
-function randomInsert($insert, $txt, $times = 3)
-{
-
-    preg_match_all("/[\x01-\x7f]|[\xe0-\xef][\x80-\xbf]{2}/", $txt, $match);
-    $delay = array();
-    $add = 0;
-    foreach ($match[0] as $k => $v) {
-        if ($v == '<') $add = 1;
-        if ($add == 1) $delay[] = $k;
-        if ($v == '>') $add = 0;
-    }
-
-    $str_arr = $match[0];
-    $len = count($str_arr);
-
-    foreach ($insert as $k => $v) {
-        for ($i = 0; $i < $times; $i++) {
-            $insertk = insertK($len - 1, $delay);
-            $str_arr[$insertk] .= $insert[$k];
-        }
-    }
-    return join('', $str_arr);
-}
+//function randomInsert($insert, $txt, $times = 3)
+//{
+//
+//    preg_match_all("/[\x01-\x7f]|[\xe0-\xef][\x80-\xbf]{2}/", $txt, $match);
+//    $delay = array();
+//    $add = 0;
+//    foreach ($match[0] as $k => $v) {
+//        if ($v == '<') $add = 1;
+//        if ($add == 1) $delay[] = $k;
+//        if ($v == '>') $add = 0;
+//    }
+//
+//    $str_arr = $match[0];
+//    $len = count($str_arr);
+//
+//    foreach ($insert as $k => $v) {
+//        for ($i = 0; $i < $times; $i++) {
+//            $insertk = insertK($len - 1, $delay);
+//            $str_arr[$insertk] .= $insert[$k];
+//        }
+//    }
+//    return join('', $str_arr);
+//}
 
 function insertK($count, &$delay)
 {
@@ -87,6 +87,13 @@ $websites = Db::instance('spider')->select("websites", [
     "update_article",
     "update_sitemap"
 ]);
+
+$pool = Db::instance('spider')->select("spider_pool", [
+    "keyword",
+    "url",
+]);
+var_dump($pool);
+exit();
 $spinner = new cmf_tyc();
 foreach ($websites as $row) {
     $curl = curl_init();
@@ -103,9 +110,10 @@ foreach ($websites as $row) {
             continue;
         }
         $content = $value['content'];
+        $id = rand(0,count($pool));
         $post_data['articles'][] = array(
             "title" => $value['title'],
-            "content" => $spinner->replace(removeBold($content)),
+            "content" => $spinner->replace(removeBold($content))."<br/>来源:<a href='"+$pool[$id]['url']+"'>"+$pool[$id]['keyword']+"</a>",
 //            "content" => randomInsert([$row['keyword']], $spinner->replace(removeBold($content)), 3),
             "keyword" => $value['title'] . $row['keyword'],
             "des" => $value['title'],

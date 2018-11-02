@@ -1,6 +1,6 @@
 <?php
 require_once ('cmf_db.php');
-
+use Beanbun\Lib\Db;
 $tem = Db::instance('spider')->select("robots", [
     "content"
 ], [
