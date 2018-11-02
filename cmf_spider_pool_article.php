@@ -27,6 +27,29 @@ function get_category($host)
     }
 }
 
+function randomInsert($insert, $txt, $times = 3)
+{
+
+    preg_match_all("/[\x01-\x7f]|[\xe0-\xef][\x80-\xbf]{2}/", $txt, $match);
+    $delay = array();
+    $add = 0;
+    foreach ($match[0] as $k => $v) {
+        if ($v == '<') $add = 1;
+        if ($add == 1) $delay[] = $k;
+        if ($v == '>') $add = 0;
+    }
+
+    $str_arr = $match[0];
+    $len = count($str_arr);
+
+    foreach ($insert as $k => $v) {
+        for ($i = 0; $i < $times; $i++) {
+            $insertk = insertK($len - 1, $delay);
+            $str_arr[$insertk] .= $insert[$k];
+        }
+    }
+    return join('', $str_arr);
+}
 
 function insertK($count, &$delay)
 {

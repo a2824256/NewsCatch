@@ -1,5 +1,6 @@
 <?php
 require_once ('cmf_db.php');
+require_once ('cmf_config.php');
 require_once("guan_jian_zi.php");
 $method = "GET";
 $curl = curl_init();
@@ -10,7 +11,8 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($curl, CURLOPT_ENCODING, "gzip");
 //$i=0;
 foreach ($keyword as $key => $keyword) {
-    $url = "你的文章接口";
+//    URL为你的文章接口
+    $url = API.$keyword."&pageToken=10";
     curl_setopt($curl, CURLOPT_URL, $url);
     $output = curl_exec($curl);
     $json_res = json_decode($output, 1)['data'];
