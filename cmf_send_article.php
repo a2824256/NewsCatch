@@ -1,8 +1,7 @@
 <?php
 
-use Beanbun\Lib\Db;
 
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once ('cmf_db.php');
 require_once(__DIR__ . '/cmf_tyc.php');
 require_once(__DIR__ . '/guan_jian_zi.php');
 function removeBold($content)
@@ -62,16 +61,6 @@ function insertK($count, &$delay)
     return $insertk;
 }
 
-Db::$config['spider'] = [
-    'server' => '127.0.0.1',
-    'port' => '3306',
-    'username' => 'root',
-    'password' => '296b1654c32ceb03',
-//    'password' => 'newlife',
-    'database_name' => 'spider',
-    'database_type' => 'mysql',
-    'charset' => 'utf8',
-];
 Db::instance('spider')->insert("message", [
     "mes" => "推送服务启动",
     "time" => date("Y-m-d H:i:s"),

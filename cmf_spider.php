@@ -1,21 +1,6 @@
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+require_once ('cmf_db.php');
 require_once("guan_jian_zi.php");
-use Beanbun\Lib\Db;
-//
-//
-//
-////spider实例
-Db::$config['spider'] = [
-    'server' => '127.0.0.1',
-    'port' => '3306',
-    'username' => 'root',
-    'password' => '296b1654c32ceb03',
-//    'password' => 'newlife',
-    'database_name' => 'spider',
-    'database_type' => 'mysql',
-    'charset' => 'utf8',
-];
 $method = "GET";
 $curl = curl_init();
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);

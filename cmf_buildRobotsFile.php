@@ -1,18 +1,5 @@
 <?php
-
-use Beanbun\Lib\Db;
-
-require_once(__DIR__ . '/vendor/autoload.php');
-define("ROBOT_FILE", "robots.txt");
-Db::$config['spider'] = [
-    'server' => '127.0.0.1',
-    'port' => '3306',
-    'username' => 'root',
-    'password' => '296b1654c32ceb03',
-    'database_name' => 'spider',
-    'database_type' => 'mysql',
-    'charset' => 'utf8',
-];
+require_once ('cmf_db.php');
 
 $tem = Db::instance('spider')->select("robots", [
     "content"
