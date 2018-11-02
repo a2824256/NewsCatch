@@ -1,2 +1,2 @@
 # NewsCatch
-ThinkCMF文章推送系统.
+News push system for ThinkCMF framework.
